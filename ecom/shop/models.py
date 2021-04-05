@@ -9,6 +9,6 @@ class Product(models.Model):
     price=models.IntegerField(default=0)
     desc=models.CharField(max_length=300)
     pub_date=models.DateField()
-    image=models.ImageField(upload_to=settings.MEDIA_ROOT , default="")
+    image=models.ImageField(upload_to='shop/media/images', default="")
     def __str__(self):
-        return self.product_name
+        return self.product_name + " "+ self.category

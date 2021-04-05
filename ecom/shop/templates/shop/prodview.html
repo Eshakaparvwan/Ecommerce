@@ -1,0 +1,90 @@
+{% extends 'shop/basic.html' %}
+
+{% block title%} {{ product.product_name }}-mycart {%endblock%}
+{% block css %}
+h4 {
+    margin: 2vh 0 0 0;
+    font-size: 2.3rem;
+    font-weight: 500;
+    letter-spacing: 4px;
+}
+
+.underline{
+  
+    text-align:center;
+    justify-content: center;
+    margin-bottom: 2vh;
+    margin-top:2vh;
+    margin-left:2%;
+   
+}
+
+.underline div{
+    width: 100px;
+    height: 3px;
+    background: darkorange;
+   
+}
+
+{% endblock %}
+{% block body%}
+{% load static %}
+    <div class="container my-4">
+        <div class="row">
+        <div class="col-md-4">
+            <div class="row">
+                <img src="{% static '/shop/sample.jpg' %}" width="233px" height="385px"></img>
+            </div>
+            <div class="row">
+                <button  type="button" class="btn btn-lg btn-success mt-2">
+                    Buy Now
+                </button>
+                <button type="button" class="btn btn-lg mt-2" style="background:#ccffcc">
+                   Add to Cart
+                </button>
+            </div>
+            </div>
+            <div class="col-md-7" style="margin-left:5%" >
+                        
+                    <h4>{{ product.product_name }}</h4><div class="underline"><div></div></div>
+                    <h2>Rs.{{ product.price }}</h2>
+                    <p>{{ product.desc }}</p>
+               
+                </div>
+            </div>
+    
+    </div>
+    
+ {% endblock%}
+ {% block js %}
+<script>
+ 
+  console.log('working');
+        if(localStorage.getItem('cart')==null){
+          var cart={};
+        }
+        else{
+          cart=JSON.parse(localStorage.getItem('cart'));
+          document.getElementById('cart').innerHTML= Object.keys(cart).length;
+
+        }
+        $('.cart').click(function()
+        {
+          var id=this.id.toString()
+           console.log(id);
+        
+          if(cart[id]!=undefined){
+            cart[id]=cart[id]+1; 
+            }
+          else{
+            cart[id]=1;
+          }
+          console.log(cart);
+          localStorage.setItem('cart',JSON.stringify(cart));
+        });
+      
+      //  $('#popcart').popover();
+               
+     
+  </script>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'shop/basic.html' %}
+  {% block css %} 
+
+  h1 {
+    margin: 2vh 0 0 0;
+    font-size: 2.3rem;
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: 4px;
+}
+
+.underline{
+  
+    text-align:center;
+    justify-content: center;
+    margin-bottom: 2vh;
+    margin-top:2vh;
+  
+   
+}
+
+.underline div{
+    width: 150px;
+    height: 3px;
+    background: darkorange;
+    margin-left:43%;
+}
+ 
+
+  {% endblock %} 
+
+{% block body %}
+
+        {% load static%}
+        <div class="container">
+          {% for products, range, nSlides in allProds %}
+             <h1 >{{ products.0.category }}</h1>
+             <div class="underline">
+              <div></div>
+            </div>
+             <div class="row">
+               
+              {% for i in products %}
+                <div class="col-4">
+                  <div class="card" style="width: 23rem; margin:5%;">
+                    <img class="card-img-top" src="{% static 'shop/sample.jpg' %}" alt="Card image cap">
+                      <div class="card-body">
+                       <h5 class="card-title">{{ i.product_name}}</h5>
+                       <p class="card-text">{{i.desc}}</p>
+                       <p class="card-text">{{i.image.url}}</p>
+                       <button id="pr{{ i.id }}" class="btn btn-primary cart">ADD TO CART </button>
+                      <a href="/shop/products/{{ i }}"><button id="qv{{ i.id }}" class="btn btn-primary cart">VIEW</button></a>
+                      </div>
+                  </div>
+                 </div>
+            {% endfor %}
+          </div>
+            {% endfor %}
+              
+        </div>
+
+{% endblock %}          
+{% block js %}
+<script>
+ 
+  console.log('working');
+        if(localStorage.getItem('cart')==null){
+          var cart={};
+        }
+        else{
+          cart=JSON.parse(localStorage.getItem('cart'));
+          document.getElementById('cart').innerHTML= Object.keys(cart).length;
+
+        }
+        $('.cart').click(function()
+        {
+          var id=this.id.toString()
+           console.log(id);
+        
+          if(cart[id]!=undefined){
+            cart[id]=cart[id]+1; 
+            }
+          else{
+            cart[id]=1;
+          }
+          console.log(cart);
+          localStorage.setItem('cart',JSON.stringify(cart));
+        });
+      
+      //  $('#popcart').popover();
+               
+     
+  </script>
+{% endblock %}
