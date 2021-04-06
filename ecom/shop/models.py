@@ -12,3 +12,14 @@ class Product(models.Model):
     image=models.ImageField(upload_to='shop/media/images', default="")
     def __str__(self):
         return self.product_name + " "+ self.category
+
+
+class Contact(models.Model):
+    msg_id = models.AutoField
+    name = models.CharField(max_length=50)
+    email = models.CharField(max_length=70, default="")
+    phone = models.CharField(max_length=70, default="")
+    desc = models.CharField(max_length=500, default="")
+    
+    def __str__(self):
+        return self.name

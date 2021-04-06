@@ -42,13 +42,15 @@
                
               {% for i in products %}
                 <div class="col-4">
-                  <div class="card" style="width: 23rem; margin:5%;">
+                  <div class="card align-items-center" style="width: 23rem; margin:5%;">
                     <img class="card-img-top" src="{% static 'shop/sample.jpg' %}" alt="Card image cap">
                       <div class="card-body">
                        <h5 class="card-title">{{ i.product_name}}</h5>
                        <p class="card-text">{{i.desc}}</p>
                        <p class="card-text">{{i.image.url}}</p>
+                       <span id="divpr{{i.id}}" class="divpr">
                        <button id="pr{{ i.id }}" class="btn btn-primary cart">ADD TO CART </button>
+                      </span>
                       <a href="/shop/products/{{ i }}"><button id="qv{{ i.id }}" class="btn btn-primary cart">VIEW</button></a>
                       </div>
                   </div>
@@ -59,36 +61,75 @@
               
         </div>
 
+        <!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button> -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}          
 {% block js %}
 <script>
- 
-  console.log('working');
-        if(localStorage.getItem('cart')==null){
-          var cart={};
-        }
-        else{
-          cart=JSON.parse(localStorage.getItem('cart'));
-          document.getElementById('cart').innerHTML= Object.keys(cart).length;
+ if (localStorage.getItem('cart') == null) {
+    var cart = {};
+} else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    document.getElementById('cart').innerHTML = Object.keys(cart).length;
+    updateCart(cart);
+}
+// If the add to cart button is clicked, add/increment the item
+$('.cart').click(function() {
+    var idstr = this.id.toString();
+    if (cart[idstr] != undefined) {
+        cart[idstr] = cart[idstr] + 1;
+    } else {
+        cart[idstr] = 1;
+    }
+    updateCart(cart);
+    
+});
 
-        }
-        $('.cart').click(function()
-        {
-          var id=this.id.toString()
-           console.log(id);
-        
-          if(cart[id]!=undefined){
-            cart[id]=cart[id]+1; 
-            }
-          else{
-            cart[id]=1;
-          }
-          console.log(cart);
-          localStorage.setItem('cart',JSON.stringify(cart));
-        });
-      
-      //  $('#popcart').popover();
-               
-     
+function updateCart(cart) {
+    for (var item in cart) {
+        document.getElementById('div' + item).innerHTML = "<button id='minus" + item + "' class='btn btn-primary minus'>-</button> <span id='val" + item + "''>" + cart[item] + "</span> <button id='plus" + item + "' class='btn btn-primary plus'> + </button>";
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    document.getElementById('cart').innerHTML = Object.keys(cart).length;
+    console.log(cart);
+    // updatePopover(cart);
+}
+// If plus or minus button is clicked, change the cart as well as the display value
+$('.divpr').on("click", "button.minus", function() {
+    a = this.id.slice(7, );
+    cart['pr' + a] = cart['pr' + a] - 1;
+    cart['pr' + a] = Math.max(0, cart['pr' + a]);
+    document.getElementById('valpr' + a).innerHTML = cart['pr' + a];
+    updateCart(cart);
+});
+$('.divpr').on("click", "button.plus", function() {
+    a = this.id.slice(6, );
+    cart['pr' + a] = cart['pr' + a] + 1;
+    document.getElementById('valpr' + a).innerHTML = cart['pr' + a];
+    updateCart(cart);
+});
+</script>
   </script>
 {% endblock %}
