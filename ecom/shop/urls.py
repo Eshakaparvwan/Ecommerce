@@ -28,5 +28,5 @@ urlpatterns = [
     path('checkout/', views.checkout,name="Checkout"),
     path('search', views.search,name="Search"),
     # path('', views.index,name="shophome"),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
 

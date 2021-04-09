@@ -57,7 +57,7 @@ ROOT_URLCONF = 'ecom.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['ecom/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,5 +121,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL="my-a-cart/"
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/images/')
+STATICFILES_DIRS = (
+     os.path.join(BASE_DIR, "static"),
+ )
+# print(STATICFILES_DIRS)

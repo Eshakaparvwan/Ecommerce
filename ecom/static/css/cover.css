@@ -1,0 +1,49 @@
+
+.head{
+    opacity: 0.8;
+}
+.navbar{
+    background-color: black;
+    opacity:0.8;
+ }
+.page{
+    
+       
+        height:625px;
+        width:100%;
+}
+.phead{
+    margin: 2vh 0 0 0;
+   /* font-size: 2rem; */
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: 4px;
+
+}
+.pbody{
+    margin-top: 10%;
+}
+.buttond{
+    margin:11% 0% 0% 35%;
+}
+button{
+    
+    margin:2%;
+}
+
+.underline{
+  
+    text-align:center;
+    justify-content: center;
+    margin-bottom: 2vh;
+    margin-top:2vh;
+  
+   
+}
+
+.underline div{
+    width: 150px;
+    height: 3px;
+    background: darkorange;
+    margin-left:43%;
+}
